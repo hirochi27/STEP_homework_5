@@ -5,22 +5,6 @@ import sys
 from common import print_tour, read_input
 
 
-#cities　＝　座標のタプルのリスト
-
-#今いる都市を保存する関数　now_city
-#next_cityに次に行きたい都市を入れる
-#now_cityから一番座標が近い都市をnext_cityに入れる
-
-#座標の近さは絶対値で計測
-
-#最初の座標をstartとして保存（最後に戻ってくるために）
-#既に訪れたところは別管理
-
-#最初に座標順に並べてみるとか？？
-
-#一番近い座標を見つけたらnow_listを変更→次の座標を計算
-#繰り返す
-
 def solve(cities):
     # Build a trivial solution.
     # Visit the cities in the order they appear in the input.
