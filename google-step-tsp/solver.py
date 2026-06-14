@@ -30,8 +30,7 @@ def solve(cities):
     diff_list = []
 
     #最初の町だけ、now_cityにいれとく
-    start_city = cities[0]
-    now_city = start_city
+    now_city = cities[0]
     now_city_index = 0
 
 
@@ -44,6 +43,9 @@ def solve(cities):
 
     visited_list.append(now_city_index)
 
+
+    #貪欲法
+    #ここはN^2
     flag = True
     while flag == True:
         #一番近くの都市を見つけるために、座標毎の差を計算する
@@ -62,14 +64,13 @@ def solve(cities):
             # print(diff_y)
             # print(diff_xy)
 
-            #(差、index)のタプルのリストを作る
+            #(差、index)のタプルをリストに追加
             diff_list.append((diff_xy, index))
 
 
         #visited_listのやつだけNoneのままにしたい
         #一番差の小さい都市を次に行く都市に決定
         next_city = min(diff_list)
-        # print(f"next_city : {next_city}")
 
         #全ての差をリセット
         diff_list.clear()
@@ -94,9 +95,47 @@ def solve(cities):
             flag = False
 
 
-        # diff_list.sort()
-        # for index in diff_list:
-        #     return_list.append(diff_list[index][1])
+    #2-opt
+
+    #二つ都市の間を逆順にする
+    #ここの計算量N＾3?
+    flag = True
+    while flag == True:
+        flag = False
+        for index in range(len(answer_list)-1): #answer_list＝citiesにおけるindex
+            goal_index = index + 2
+            while goal_index < len(answer_list):
+                #goal/start_index = citiesにおけるindex
+                start_city_index = answer_list[index]
+                goal_city_index = answer_list[goal_index] #最後の一周で、最初に戻したい
+
+                start_next = answer_list[index + 1]
+                goal_next = answer_list[(goal_index + 1) % len(answer_list)]
+
+                #距離の差を計算
+                start_diff_x = abs(cities[start_city_index][0] - cities[start_next][0])
+                start_diff_y = abs(cities[start_city_index][1] - cities[start_next][1])
+
+                goal_diff_x = abs(cities[goal_city_index][0] - cities[goal_next][0])
+                goal_diff_y = abs(cities[goal_city_index][1] - cities[goal_next][1])
+
+                diff_xy = start_diff_x + start_diff_y + goal_diff_x + goal_diff_y
+
+                #2optした後の距離の差を計算
+                opt_s_diff_x = abs(cities[start_city_index][0] - cities[goal_city_index ][0])
+                opt_s_diff_y = abs(cities[start_city_index][1] - cities[goal_city_index ][1])
+
+                opt_g_diff_x = abs(cities[start_next][0] - cities[goal_next][0])
+                opt_g_diff_y = abs(cities[start_next][1] - cities[goal_next][1])
+
+                opt_diff_xy = opt_s_diff_x + opt_s_diff_y + opt_g_diff_x + opt_g_diff_y
+
+                if opt_diff_xy < diff_xy:
+                    answer_list[index+ 1 : goal_index + 1] = answer_list[index + 1 : goal_index + 1][::-1]
+                    flag = True #入れ替えがあった場合は繰り返す
+                
+                goal_index += 1
+            
 
     return answer_list
 
