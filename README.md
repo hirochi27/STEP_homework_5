@@ -27,3 +27,11 @@ http://localhost:8000/visualizer/build/default/
 
 ## 現状
 
+* 貪欲法も2-optも大分うまく動いているのですが、たまに道同士がクロスしてしまいます。
+* 時間計算量がO(N³)と少し大きいので、もう少し良いやり方があるのではと思っています。
+
+<img width="937" height="484" alt="image" src="https://github.com/user-attachments/assets/c69d9428-0dfc-4934-8807-3c644c172d48" />
+
+
+
+
