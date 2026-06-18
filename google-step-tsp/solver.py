@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
+#http://localhost:8000/visualizer/build/default/
+
 import sys
+import math
 
 from common import print_tour, read_input
 
@@ -96,23 +99,15 @@ def solve(cities):
 
 
                 #現在の距離の差を計算
-                start_diff_x = abs(cities[start][0] - cities[start_next][0])
-                start_diff_y = abs(cities[start][1] - cities[start_next][1])
-
-                goal_diff_x = abs(cities[goal][0] - cities[goal_next][0])
-                goal_diff_y = abs(cities[goal][1] - cities[goal_next][1])
-
-                diff_xy = start_diff_x + start_diff_y + goal_diff_x + goal_diff_y
+                start_diff = math.sqrt((cities[start][0] - cities[start_next][0])** 2 + (cities[start][1] - cities[start_next][1]) ** 2)
+                goal_diff = math.sqrt((cities[goal][0] - cities[goal_next][0]) ** 2 + (cities[goal][1] - cities[goal_next][1]) ** 2)
+                diff_xy = start_diff + goal_diff
 
 
                 #2optした後の距離の差を計算
-                opt_s_diff_x = abs(cities[start][0] - cities[goal][0])
-                opt_s_diff_y = abs(cities[start][1] - cities[goal][1])
-
-                opt_g_diff_x = abs(cities[start_next][0] - cities[goal_next][0])
-                opt_g_diff_y = abs(cities[start_next][1] - cities[goal_next][1])
-
-                opt_diff_xy = opt_s_diff_x + opt_s_diff_y + opt_g_diff_x + opt_g_diff_y
+                opt_s_diff = math.sqrt((cities[start][0] - cities[goal][0]) ** 2 + (cities[start][1] - cities[goal][1]) ** 2)  
+                opt_g_diff = math.sqrt((cities[start_next][0] - cities[goal_next][0]) ** 2 + (cities[start_next][1] - cities[goal_next][1]) ** 2)
+                opt_diff_xy = opt_s_diff + opt_g_diff
 
 
                 #2optに従って入れ替えた方が距離が短くなる = 道がクロスしているため、都市の順番を入れ替える
