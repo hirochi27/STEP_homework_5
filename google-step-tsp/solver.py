@@ -44,9 +44,9 @@ def solve(cities):
                 continue
 
             #now_cityと各都市との距離の差を計算
-            diff_x = abs(cities[index][0] - now_city[0])
-            diff_y = abs(cities[index][1] - now_city[1])
-            diff_xy = diff_x + diff_y
+            diff_x = (cities[index][0] - now_city[0]) ** 2
+            diff_y = (cities[index][1] - now_city[1]) ** 2
+            diff_xy = math.sqrt(diff_x + diff_y)
 
             #(差、index)のタプルとして全都市との差を保存
             diff_list.append((diff_xy, index))
